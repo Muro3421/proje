@@ -883,11 +883,11 @@ async def sa(event):
 '''
     
 
-@client.on(events.NewMessage(pattern='sa'))
+@client.on(events.NewMessage(pattern='^sa'))
 async def sa(event):
     await event.respond("Aleyküm Selam ve Rahmetullah ve bereketuhu hoş geldin")
 
-@client.on(events.NewMessage(pattern='Sa'))
+@client.on(events.NewMessage(pattern='^Sa'))
 async def sa(event):
     await event.respond("Aleyküm Selam ve Rahmetullah ve bereketuhu hoş geldin")
 
