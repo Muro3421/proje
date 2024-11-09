@@ -897,7 +897,7 @@ async def sa(event):
 async def sa(event):
     await event.respond("Aleyküm Selam ve Rahmetullah ve bereketuhu hoş geldin")
 
-@client.on(events.NewMessage(pattern=r'(?i)^Selamüm aleyküm$'))
+@client.on(events.NewMessage(pattern=r'(?i)^Selamün aleyküm$'))
 async def sa(event):
     await event.respond("Aleyküm Selam ve Rahmetullah ve bereketuhu hoş geldin")
 
