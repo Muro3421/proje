@@ -791,6 +791,10 @@ async def ezan_vakti(event):
         await event.reply("Ezan vakitleri alınamadı, lütfen daha sonra tekrar deneyin.")
 
 
+@client.on(events.NewMessage(pattern=r'/komut'))
+async def komut(event):
+    await event.respond("**Selamın Aleyküm**\n⚙️__Komut Listesi__\n\n/hediye \n**Örnek:** ```/hediye @SakirBey```\n\n/tespih __Sanal Tespih Çekersiniz..__\n\n/zekat __Zekat Hesaplayıcı..__\n**Örnek:** ```/zekat 1400 200```\n\n/soru __Botumuza Eklediğim Soruları Bu Komut İle Sorabilirsiniz__\n**Örnek:** ```/soru namaz nasıl kılınır``` Soru Eklentileri Şunlardır->```namaz nasıl kılınır```,```oruç kimlere farzdır```\n\n/mezhep __Girdiğiniz Mezhep Hakkında Bilgi Getirir__\n**Örnek:** ```/mezhep hanefi``` Mezhepler Şunlardır -> ```hanefi``` , ```şafii``` , ```maliki``` , ```hanbeli``` , ```şii```\n\n/tarih __Güncel Miladi ve Hicri Takvimini Gösterir__\n\n/ösöz __Random Özlü Söz Getirir..__\n\n/hadis __Random Sahih Hadis Getirir..__\n\n/ayet __Random Ayet Getirir..__\n\n/sunnet __Random Peygamberimizin s.a.v Sünnetlerini Getirir..__\n\n/99 __Random Esmaül Hüsna Getirir..__\n\n/dua __Bu Komut İle Eklediğimiz Duaları Getirir..__\n**Örnek:** ```/dua sabah duası``` Eklenmiş olan dualar -> ```sabah duası``` , ```yolculuk duası``` , ```yatarken okunacak dua```\n\n/ilmihal __Eklediğimiz İlmihal Bilgilerini Getirir..__\n**Örnek:** ```/ilmihal oruç``` Kullanılan Cümleler -> ```oruç``` , ```zekat``` , ```imanın esasları``` , ```ibadetler``` , ```temizlik``` , ```ahlak``` , ```helal ve haram``` , ```nikah ve evlilik``` , ```ahiret inancı``` , ```muamelat```\n\n/sures\n\n/ezanvakti \n**Örnek:** ```/ezanvakti adana```\n\n")
+
 hediyeler = [
     "seccade", "Kuran'ı kerim", "Elmas Yüzük", 
     "Çikolata Kutusu", "tespih", "araba", "Kupa", 
