@@ -37,7 +37,7 @@ from datetime import datetime
 # API ID ve API Hash bilgilerini buraya ekle
 api_id = '28319460'  # Kendi API ID'nizi buraya yazın
 api_hash = '2b96c98ca24a841eaf687db2cb8082c5'  # Kendi API Hash'inizi buraya yazın
-bot_token = '6307587919:AAFvvgTvv6QSaWyER0EeNMxZGjRDw-QRNpw'
+bot_token = '7763011142:AAFlwQNLG7M01pbcQd2qE9kCb57ho5Ett_A'
 
 # Kullanıcı bilgilerini saklamak için bir sözlük
 user_data = {}
