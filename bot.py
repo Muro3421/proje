@@ -883,13 +883,14 @@ async def sa(event):
 '''
     
 
-@client.on(events.NewMessage(pattern='^sa'))
+@client.on(events.NewMessage(pattern=r'(?i)^sa$'))
 async def sa(event):
     await event.respond("Aleyküm Selam ve Rahmetullah ve bereketuhu hoş geldin")
 
-@client.on(events.NewMessage(pattern='^Sa'))
+@client.on(events.NewMessage(pattern=r'(?i)^Sa$'))
 async def sa(event):
     await event.respond("Aleyküm Selam ve Rahmetullah ve bereketuhu hoş geldin")
+
 
 sudo_users = [5710250764, 7235469974, 1503631196, 7489011154]  # Replace these with your actual sudo user IDs
 
