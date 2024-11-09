@@ -71,6 +71,8 @@ async def my_event_handler(event):
         await event.respond(f'Esteuzubillah Selamın Aleyküm, {username}! ')
     elif message_text.startswith('/count'):
         await event.respond(f'Sen {user_data[username]["message_count"]} mesaj gönderdin.')
+    if message_text.startswith('dedikodu'):
+        await event.respond('Esteuzubillah dedikodu haramdır..!')
     if message_text.startswith('Müslümanmısın'):
         await event.respond('Elhamdülillah Çok şükür, Müslümanım.')
     if message_text.startswith('Ne zamandan beri müslümansın'):
@@ -519,8 +521,16 @@ def get_faq(question):
 
 # 8. İlmihal Bilgileri
 ilmihal = {
-    "Oruç": "Oruç, İslam'ın beş şartından biridir. Ramazan ayında tutulur.",
-    "Zekat": "Zekat, fakirlere verilmesi gereken mali bir ibadettir.",
+    "oruç": "Oruç, İslam'ın beş şartından biridir. Ramazan ayında tutulur.",
+    "zekat": "Zekat, fakirlere verilmesi gereken mali bir ibadettir.",
+    "imanın esasları": "İmanın 6 temel şartı vardır:\n\n**Allah'a İman**: Allah’ın varlığına ve birliğine inanmak.\n\n**Meleklere iman:** Meleklerin Allah’ın emirlerini yerine getiren nurani varlıklar olduğuna inanmak.\n\n**Kitaplara iman:** Allah’ın insanlara rehberlik etmek için kutsal kitaplar gönderdiğine inanmak (Tevrat, Zebur, İncil, Kur'an).\n\n**Peygamberlere iman:** Allah’ın insanlara yol göstermek için peygamberler gönderdiğine inanmak\n\n**Ahiret gününe iman:** Ölümden sonra dirilişe ve ahirette hesap verileceğine inanmak\n\n**Kader ve kazaya iman:** Her şeyin Allah’ın ilmi ve takdiri ile gerçekleştiğine inanmak.",
+    "ibadetler": "İslam'da ibadetler, kulun Allah’a olan bağlılığını ve şükran duygusunu ifade etme şeklidir. Beş temel ibadet vardır:\n\n**Namaz:** Günde beş vakit kılınan farz ibadet. Namaz, temizliğe ve vakitlere göre yapılır.\n\n**Oruç:** Ramazan ayında, tan yerinin ağarmasından güneş batıncaya kadar yeme-içmeden uzak durmaktır.\n\n**Zekat:** Maddi durumu iyi olanların ihtiyaç sahiplerine mallarının kırkta birini vermesi.\n\n**Hac:** Maddi ve fiziksel durumu uygun olan Müslümanların ömürde bir kez Kâbe’ye gitmeleri.\n\n**Kelime-i Şehadet:** İslam’ın temel inanç sözüdür ve “Eşhedü en lâ ilâhe illallah ve eşhedü enne Muhammeden abdühû ve rasûlüh” şeklindedir.",
+    "temizlik": "İslam’da temizlik, ibadetin ön şartıdır. Hem maddi hem de manevi temizlik önemlidir:\n\n**Abdest:** Namaz kılmadan önce alınan ve bazı beden uzuvlarının yıkanması ile yapılan temizlik.\n\n**Gusül:** Tüm vücudun yıkanmasıdır, cünüplük hali gibi durumlarda farzdır.\n\n**Teyemmüm:** Su bulunmadığında veya su kullanılamadığında yapılan abdest türüdür.",
+    "ahlak": "Ahlak, İslam’ın en temel konularından biridir. Güzel ahlak, doğruluk, dürüstlük, yardımseverlik, sabır, tevazu gibi değerleri içerir. Ahlaklı bir Müslüman; yalan söylemez, emanete hıyanet etmez, kötü davranışlardan uzak durur.",
+    "helal ve haram": "İslam’da helal olan (izin verilen) ve haram olan (yasaklanan) davranışlar ve yiyecek-içecekler vardır:\n\n**Helal:** Allah’ın izin verdiği şeylerdir.\n\n**Haram:** İçki, domuz eti, hırsızlık gibi yasaklanan şeylerdir.",
+    "nikah ve evlilik": "Evlilik, İslam'da teşvik edilen bir ibadettir. İki kişinin dinî ve yasal kurallara göre evlenmesi gerekir. Nikahın geçerli olması için belirli şartlar (şahitler, mehir vb.) bulunur.",
+    "ahiret inancı": "İslam, ölümden sonra bir hayatın varlığını kabul eder. Ölen kişi kabir hayatını yaşar ve kıyametten sonra tekrar diriltilerek hesap verir. İyilik yapanlar cennete, kötülük yapanlar ise cehenneme gidecektir.",
+    "muamelat": "İslam, ticaret ve toplumsal ilişkilerde adaletli, dürüst ve helal kazanç elde etmeyi emreder. Faiz gibi bazı kazanç yolları haram kılınmıştır."
 }
 
 def get_ilmihal(info):
