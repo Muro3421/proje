@@ -566,7 +566,7 @@ rxyzdev_tagTot = {}
 rxyzdev_initT = {}
 
 OWNER_ID = 5710250764
-BOT_ID = 6307587919
+BOT_ID = 7763011142
 @client.on(events.ChatAction)
 async def hg(event):
     # Öncelikle `action_message` ve `action` nesnesinin varlığını kontrol ediyoruz
@@ -886,11 +886,6 @@ async def sa(event):
 @client.on(events.NewMessage(pattern=r'(?i)^sa$'))
 async def sa(event):
     await event.respond("Aleyküm Selam ve Rahmetullah ve bereketuhu hoş geldin")
-
-@client.on(events.NewMessage(pattern=r'(?i)^Sa$'))
-async def sa(event):
-    await event.respond("Aleyküm Selam ve Rahmetullah ve bereketuhu hoş geldin")
-
 
 sudo_users = [5710250764, 7235469974, 1503631196, 7489011154]  # Replace these with your actual sudo user IDs
 
