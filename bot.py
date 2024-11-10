@@ -104,7 +104,7 @@ async def my_event_handler(event):
     if message_text.startswith('/developer'):
         await event.respond('__Bu botu kodlayan ve geliştiren değerli sahibim:__ @SakirBey 💻') 
     if message_text.startswith('/ekip'):
-        await event.respond('**Emeği Geçenler...**\n\n@SakirBey 💎\n\n@monstersahipp 👑\n\n@Unknow41E ⚡️\n\n__Hepinize Canı Gönülden Teşekkürler...__')
+        await event.respond('**Emeği Geçenler...**\n\n@SakirBey 💎\n\n@Murrroooooooo 👑\n\n@Unknow41E ⚡️\n\n__Hepinize Canı Gönülden Teşekkürler...__')
     if message_text.startswith('Abdestin farzı kaç'):
         await event.respond('Kuranda abdestin dört farzı belirtilmiştir. Bunlar:\n\n1.**Yüzün Yıkanması**: “Yüzlerinizi yıkayın.” (Maide Suresi, 5:6)\n\n2.**Ellerin Dirseklerle Birlikte Yıkanması:** “Ellerinizi dirseklerinize kadar yıkayın.” (Maide Suresi, 5:6)\n\n3.**Başın 4/1 Mesh Edilmesi:** “Başlarınızı mesh edin.” (Maide Suresi, 5:6)\n\n4.**Ayakların Aşık Kemiklerine Kadar Mesh Edilmesi:** “Ayaklarınızı topuklarınıza kadar mesh edin.” (Maide Suresi, 5:6)\n\nBu dört unsur abdestin farzlarıdır ve abdestin geçerli olması için bu adımların yerine getirilmesi gereklidir.')
 
@@ -610,15 +610,7 @@ async def help(event):
     await client.send_message(log_grub, f"ℹ️ {ad} Kişisi Botu Başlattı.")
     
     # Kullanıcıya yanıt gönderme
-    helptext = (
-        "**🌀 İslamicBot Komutları**\n\n"
-        "**/hadis komutu ile hadis getirir.**\n\n"
-        "**/ayet komutu ile ayet getirir.**\n\n"
-        "**/dua komutu ile istediğin dua getirir.** Şu anlık olan dua komutları şunlardır:\n"
-        "< /dua sabah duası > - < /dua yolculuk duası >- < /dua yatarken okunan dua >\n\n"
-        "**/sure bakara** komutu ile süreyi gönderir.\n\n"
-        "**/tespih** komutu ile tespih yapar."
-    )
+    helptext = ("**⚙️Yardım Menüsü**\n\nTüm Komutlar İçin /komut Yeterli Olacaktır..")
 
     # Komut çalıştıran kullanıcıya yanıt gönderme
     await event.reply(
