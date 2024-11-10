@@ -91,16 +91,6 @@ async def my_event_handler(event):
         await event.respond('Aleyküm Selam ve Rahmetullah ve bereketuhu hoş geldin')
     if message_text.startswith('esmaül hüsna'):
         await event.respond('Esmaül Hüsna İçin /99 komutunu kullanınız..')
-    if message_text.startswith('sakir'):
-        await event.respond('Zat-ı Mübarek Buraya Gelin. @SakirBey')
-    if message_text.startswith('Sakir'):
-        await event.respond('Zat-ı Mübarek Buraya Gelin. @SakirBey')
-    if message_text.startswith('şakir'):
-        await event.respond('Zat-ı Mübarek Buraya Gelin. @SakirBey')
-    if message_text.startswith('Şakir'):
-        await event.respond('Zat-ı Mübarek Buraya Gelin. @SakirBey')
-    if message_text.startswith('@SakirBey'):
-        await event.respond('Zat-ı Mübarek Buraya Gelin. @SakirBey')
     if message_text.startswith('/developer'):
         await event.respond('__Bu botu kodlayan ve geliştiren değerli sahibim:__ @SakirBey 💻') 
     if message_text.startswith('/ekip'):
@@ -891,7 +881,9 @@ async def sa(event):
         "**/tespih** komutu ile tespih yapar."
     )
 '''
-    
+
+
+
 
 @client.on(events.NewMessage(pattern=r'(?i)^sa$'))
 async def sa(event):
