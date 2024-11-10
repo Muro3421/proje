@@ -30,6 +30,7 @@ from telethon.tl.types import InputPeerChat
 import json
 from hijri_converter import Gregorian, Hijri
 import asyncio
+import os
 from telethon.tl.types import ChannelParticipantsAdmins  # Adminleri almak için gerekli import
 from datetime import datetime
 
@@ -882,8 +883,41 @@ async def sa(event):
     )
 '''
 
+@client.on(events.NewMessage(pattern='Sakir'))
+async def send_video(event):
+    # Proje kök dizinine göre video yolunu ayarlayın
+    video_path = os.path.join(os.path.dirname(__file__), 'videos/cuneyt.mp4')
+    # Videoyu komutu gönderen kişiye gönder
+    await client.send_file(event.chat_id, video_path, caption="Esteuzubillah @SakirBey")
+
+@client.on(events.NewMessage(pattern='Şakir'))
+async def send_video(event):
+    # Proje kök dizinine göre video yolunu ayarlayın
+    video_path = os.path.join(os.path.dirname(__file__), 'videos/cuneyt.mp4')
+    # Videoyu komutu gönderen kişiye gönder
+    await client.send_file(event.chat_id, video_path, caption="Esteuzubillah @SakirBey")
 
 
+@client.on(events.NewMessage(pattern='sakir'))
+async def send_video(event):
+    # Proje kök dizinine göre video yolunu ayarlayın
+    video_path = os.path.join(os.path.dirname(__file__), 'videos/cuneyt.mp4')
+    # Videoyu komutu gönderen kişiye gönder
+    await client.send_file(event.chat_id, video_path, caption="Esteuzubillah @SakirBey")
+
+@client.on(events.NewMessage(pattern='şakir'))
+async def send_video(event):
+    # Proje kök dizinine göre video yolunu ayarlayın
+    video_path = os.path.join(os.path.dirname(__file__), 'videos/cuneyt.mp4')
+    # Videoyu komutu gönderen kişiye gönder
+    await client.send_file(event.chat_id, video_path, caption="Esteuzubillah @SakirBey")
+
+@client.on(events.NewMessage(pattern='@SakirBey'))
+async def send_video(event):
+    # Proje kök dizinine göre video yolunu ayarlayın
+    video_path = os.path.join(os.path.dirname(__file__), 'videos/cuneyt.mp4')
+    # Videoyu komutu gönderen kişiye gönder
+    await client.send_file(event.chat_id, video_path, caption="Esteuzubillah @SakirBey")
 
 @client.on(events.NewMessage(pattern=r'(?i)^sa$'))
 async def sa(event):
