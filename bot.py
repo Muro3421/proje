@@ -75,6 +75,8 @@ async def my_event_handler(event):
         await event.respond('Esteuzubillah dedikodu haramdır..!')
     if message_text.startswith('Müslümanmısın'):
         await event.respond('Elhamdülillah Çok şükür, Müslümanım.')
+    if message_text.startswith('besmele'):
+        await event.respond('**BİSMİLLAHİRRAHMANİRRAHİM**.')
     if message_text.startswith('Ne zamandan beri müslümansın'):
         await event.respond('Kalu beladan beri.')
     if message_text.startswith('Rabbin kimdir'):
