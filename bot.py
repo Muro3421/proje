@@ -68,7 +68,7 @@ async def my_event_handler(event):
     message_text = event.message.message
 
     # Komutları kontrol et
-    if message_text.startswith('/start'):
+    if message_text.startswith('/startt'):
         await event.respond(f'Esteuzubillah Selamın Aleyküm, {username}! ')
     elif message_text.startswith('/count'):
         await event.respond(f'Sen {user_data[username]["message_count"]} mesaj gönderdin.')
@@ -592,6 +592,31 @@ async def hg(event):
 
 
 @client.on(events.NewMessage(pattern="/help"))
+async def help(event):
+    # Sadece komutu çalıştıran kullanıcı bilgisi
+    usr = await event.get_sender()
+    ad = f"[{usr.first_name}](tg://user?id={usr.id})"
+    
+    # Günlük grubuna sadece bir kere mesaj gönderme
+    await client.send_message(log_grub, f"ℹ️ {ad} Kişisi Botu Başlattı.")
+    
+    # Kullanıcıya yanıt gönderme
+    helptext = ("**⚙️Yardım Menüsü**\n\nTüm Komutlar İçin /komut Yeterli Olacaktır..")
+
+    # Komut çalıştıran kullanıcıya yanıt gönderme
+    await event.reply(
+        helptext,
+        buttons=[
+            [Button.url('Beni Gruba Ekle ➕', f"https://t.me/sakirviphapy_bot?startgroup=a")],
+            [Button.url('Support🛠', f"https://t.me/SakirBey2")],
+            [Button.url('Sahibim🔖', f"https://t.me/SakirBey")],
+            [Button.url('Developer🧑‍🔧', 'https://t.me/SakirBey2')],
+            [Button.url('Github Code', 'https://nolur.com')],
+        ],
+        link_preview=False
+    )
+
+@client.on(events.NewMessage(pattern="/start"))
 async def help(event):
     # Sadece komutu çalıştıran kullanıcı bilgisi
     usr = await event.get_sender()
