@@ -701,12 +701,16 @@ async def reset_tespih(event):
 async def welcome_user(event):
     # Yeni bir kullanıcı katıldıysa
     if event.user_joined or event.user_added:
-        # Kullanıcının adını al
+        # Kullanıcının adını ve kimliğini al
         user = await event.get_user()
+        user_id = user.id
         user_name = user.first_name
 
-        # Hoş geldin mesajını gönder
-        await event.reply(f"Selamın Aleyküm {user_name}! Grubumuza hoş geldin 😊")
+        # Hoş geldin mesajını kullanıcıyı etiketleyerek gönder
+        welcome_message = f"**Selamın Aleyküm** [{user_name}](tg://user?id={user_id})! **Grubumuza hoş geldin** 😊"
+        
+        # Mesajı Markdown formatında gönderin
+        await event.reply(welcome_message, parse_mode='md')
 
 
 
