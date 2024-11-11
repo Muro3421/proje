@@ -697,6 +697,18 @@ async def reset_tespih(event):
         await event.respond("⛔ Bu komutu yalnızca sudo kullanıcıları kullanabilir.")
 
 
+@client.on(events.ChatAction)
+async def welcome_user(event):
+    # Yeni bir kullanıcı katıldıysa
+    if event.user_joined or event.user_added:
+        # Kullanıcının adını al
+        user = await event.get_user()
+        user_name = user.first_name
+
+        # Hoş geldin mesajını gönder
+        await event.reply(f"Selamın Aleyküm {user_name}! Grubumuza hoş geldin 😊")
+
+
 
 '''
 @client.on(events.NewMessage(pattern="^/"))
