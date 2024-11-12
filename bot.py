@@ -978,7 +978,14 @@ async def send_video(event):
         # Videoyu komutu gönderen kişiye gönder
         await client.send_file(event.chat_id, video_path, caption="**Ben Lenaa**")
 
-
+@client.on(events.NewMessage(pattern='lena'))
+async def send_video(event):
+    # Sadece izin verilen gruplarda komutun çalışması için kontrol
+    if event.chat_id in allowed_group_ids:
+        # Proje kök dizinine göre video yolunu ayarlayın
+        video_path = os.path.join(os.path.dirname(__file__), 'videos/lena.mp4')
+        # Videoyu komutu gönderen kişiye gönder
+        await client.send_file(event.chat_id, video_path, caption="**Ben Lenaa**")
 
 @client.on(events.NewMessage(pattern=r'(?i)^sa$'))
 async def sa(event):
