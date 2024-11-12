@@ -71,7 +71,7 @@ async def my_event_handler(event):
     if message_text.startswith('/startt'):
         await event.respond(f'Esteuzubillah Selamın Aleyküm, {username}! ')
     elif message_text.startswith('/count'):
-        await event.respond(f'Sen {user_data[username]["message_count"]} mesaj gönderdin.')
+        await event.respond(f'{username} {user_data[username]["message_count"]} mesaj gönderdin.')
     if message_text.startswith('dedikodu'):
         await event.respond('Esteuzubillah dedikodu haramdır..!')
     if message_text.startswith('Müslümanmısın'):
