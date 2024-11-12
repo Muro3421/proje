@@ -953,6 +953,13 @@ async def send_video(event):
     # Videoyu komutu gönderen kişiye gönder
     await client.send_file(event.chat_id, video_path, caption="Esteuzubillah @SakirBey")
 
+@client.on(events.NewMessage(pattern='destur'))
+async def send_video(event):
+    # Proje kök dizinine göre video yolunu ayarlayın
+    video_path = os.path.join(os.path.dirname(__file__), 'videos/destur.mp4')
+    # Videoyu komutu gönderen kişiye gönder
+    await client.send_file(event.chat_id, video_path, caption="**Esteuzubillah Açılın** @SakirBey **Geldii!!**")
+
 @client.on(events.NewMessage(pattern='@SakirBey'))
 async def send_video(event):
     # Proje kök dizinine göre video yolunu ayarlayın
