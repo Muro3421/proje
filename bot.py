@@ -511,11 +511,11 @@ def calculate_zekat(wealth, debts):
 faq = {
     "namaz nasıl kılınır": "Namaz, niyetle başlar ve kıyam, rükû, secde gibi bölümlerle devam eder.",
     "oruç kimlere farzdır": "Oruç, ergenlik çağına gelmiş, akıl sağlığı yerinde, müslüman kişilere farzdır.",
-    "Ameli mezhep imamları": "İmamı Azam Ebu Hanife, İmamı Şafii, İmamı Malik, Ahmed İbni Hanbel",
-    "İtikadi mezhep imamları": "İmamı Maturidi ve İmamı Eş’ari",
-    "Mezhep İmamlarının isimleri": "Numan bin Sabit, Muhammed İdris eş-Şafiî, Ahmed ibn-i Hanbel, Enes bin Malik",
-    "Mezhep ne demektir": "İslam âlimlerinin Kur’an ve sünnet çerçevesinde, birbirleri arasındaki yorum farklılıklarından meydana gelen görüşleridir.",
-    "İcma nedir kaç çeşittir": "Peygamberimizden sonra ortaya çıkan fıkhi bir meselede, âlimlerin görüş birliği yapmalarıdır. Ör: mut’a nikâhının haramlığı icmadır.\n\nA:Sarih İcma(Âlimlerin hepsinin katıldığı) B:Sükutî icma(bir âlim icma yapar diğerleri farklı bir görüş belirtmeksizin susarlar)",
+    "ameli mezhep imamları": "İmamı Azam Ebu Hanife, İmamı Şafii, İmamı Malik, Ahmed İbni Hanbel",
+    "itikadi mezhep imamları": "İmamı Maturidi ve İmamı Eş’ari",
+    "mezhep İmamlarının isimleri": "Numan bin Sabit, Muhammed İdris eş-Şafiî, Ahmed ibn-i Hanbel, Enes bin Malik",
+    "mezhep ne demektir": "İslam âlimlerinin Kur’an ve sünnet çerçevesinde, birbirleri arasındaki yorum farklılıklarından meydana gelen görüşleridir.",
+    "icma nedir kaç çeşittir": "Peygamberimizden sonra ortaya çıkan fıkhi bir meselede, âlimlerin görüş birliği yapmalarıdır. Ör: mut’a nikâhının haramlığı icmadır.\n\nA:Sarih İcma(Âlimlerin hepsinin katıldığı) B:Sükutî icma(bir âlim icma yapar diğerleri farklı bir görüş belirtmeksizin susarlar)",
 }
 
 def get_faq(question):
