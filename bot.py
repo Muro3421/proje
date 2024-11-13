@@ -838,15 +838,16 @@ hediyeler = [
 @client.on(events.NewMessage(pattern=r'/hediye (.+)'))
 async def hediye_ver(event):
     # Komutu yazan kişi ve hediye verilecek kişi
-    user_id = event.sender_id
-    first_name = (await event.get_sender()).first_name
+    user = await event.get_user()
+    user_id = user.id
+    user_name = user.first_name
     hedef_kullanici = event.pattern_match.group(1)
 
     # Rastgele bir hediye seç
     hediye = random.choice(hediyeler)
 
     # Mesajı oluştur
-    mesaj = f"🎁 {first_name} adlı kişi {hedef_kullanici} adlı kullanıcıya {hediye} hediye etti.\n\n**Hediyeleşin ki birbirinize sevginiz artsın. (Muvatta, Hüsnü’l-Hulk 16.)**"
+    mesaj = f"🎁 [{user_name}](tg://user?id={user_id}) adlı kişi {hedef_kullanici} adlı kullanıcıya {hediye} hediye etti.\n\n**Hediyeleşin ki birbirinize sevginiz artsın. (Muvatta, Hüsnü’l-Hulk 16.)**"
 
     # Mesajı gönder
     await event.respond(mesaj)
@@ -1088,50 +1089,3 @@ async def alive(event):
 client.start()
 print("Destur esteuzubillah bot çalışıyor mümin kardeşim benim..")
 client.run_until_disconnected()
-
-
-import os
-import requests
-from telegram import Update
-from telegram.ext import Updater, CommandHandler, CallbackContext
-
-API_URL = "https://aztro.sameerkumar.website"
-
-# Burç yorumlarını almak için fonksiyon
-def get_horoscope(sign: str, day: str):
-    response = requests.post(f"{API_URL}/?sign={sign}&day={day}")
-    if response.status_code == 200:
-        horoscope = response.json()
-        return horoscope["description"]
-    else:
-        return "Burç yorumu alınırken bir hata oluştu."
-
-# /burc komutunu işleyen fonksiyon
-def burc(update: Update, context: CallbackContext):
-    if len(context.args) > 0:
-        burc = context.args[0].lower()  # Kullanıcının girdiği burç ismini alıyoruz
-        day = "today"  # Bugün için burç yorumu alıyoruz
-
-        # Burç yorumunu alıyoruz
-        yorum = get_horoscope(burc, day)
-        update.message.reply_text(f"{burc.capitalize()} Burcu Bugün:\n\n{yorum}")
-    else:
-        update.message.reply_text("Lütfen bir burç girin. Örnek: /burc yay")
-
-
-# Botu başlatmak
-def main():
-    # Bot tokenınızı buraya girin
-    token = '7763011142:AAFlwQNLG7M01pbcQd2qE9kCb57ho5Ett_A'
-    if not token:
-        raise ValueError("BOT_TOKEN ortam değişkeni ayarlanmamış!")
-
-    updater = Updater(token, use_context=True)
-    dp = updater.dispatcher
-
-    # Komutları ekliyoruz
-    dp.add_handler(CommandHandler("burc", burc))
-
-    # Botu çalıştırmaya başlıyoruz
-    updater.start_polling()
-    updater.idle()
