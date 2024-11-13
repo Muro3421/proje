@@ -838,19 +838,19 @@ hediyeler = [
 @client.on(events.NewMessage(pattern=r'/hediye (.+)'))
 async def hediye_ver(event):
     # Komutu yazan kişi ve hediye verilecek kişi
-    user = await event.get_user()
-    user_id = user.id
-    user_name = user.first_name
+    user_id = event.sender_id
+    first_name = (await event.get_sender()).first_name
     hedef_kullanici = event.pattern_match.group(1)
 
     # Rastgele bir hediye seç
     hediye = random.choice(hediyeler)
 
     # Mesajı oluştur
-    mesaj = f"🎁 [{user_name}](tg://user?id={user_id}) adlı kişi {hedef_kullanici} adlı kullanıcıya {hediye} hediye etti.\n\n**Hediyeleşin ki birbirinize sevginiz artsın. (Muvatta, Hüsnü’l-Hulk 16.)**"
+    mesaj = f"🎁 {first_name} adlı kişi {hedef_kullanici} adlı kullanıcıya {hediye} hediye etti.\n\n**Hediyeleşin ki birbirinize sevginiz artsın. (Muvatta, Hüsnü’l-Hulk 16.)**"
 
     # Mesajı gönder
     await event.respond(mesaj)
+
 
 
 
