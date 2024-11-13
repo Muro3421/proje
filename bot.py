@@ -943,26 +943,30 @@ async def send_video(event):
     # Videoyu komutu gönderen kişiye gönder
     await client.send_file(event.chat_id, video_path, caption="Esteuzubillah @SakirBey")
 
-@client.on(events.NewMessage(pattern='/burc'))
-async def daily_horoscope(event):
-    # Kullanıcının burcunu öğrenin
-    message = event.message.message.split()  # Komut ve burç ismini ayrıştırmak için
-    if len(message) < 2:
-        await event.reply("Lütfen burcunuzu belirtin! Örnek: /burc koç")
-        return
-    sign = message[1].lower()
+API_URL = "https://aztro.sameerkumar.website"
 
-    # API isteği yapın
-    try:
-        response = requests.get(f'{horoscope_api_url}?sign={sign}')
-        if response.status_code == 200:
-            data = response.json()
-            daily_horoscope = data.get('horoscope', 'Burç yorumu bulunamadı.')
-            await event.reply(f"{sign.capitalize()} burcu için günlük yorum:\n\n{daily_horoscope}")
-        else:
-            await event.reply("Burç yorumu alınamadı. Lütfen daha sonra tekrar deneyin.")
-    except Exception as e:
-        await event.reply("Bir hata oluştu. Lütfen daha sonra tekrar deneyin.")
+# Burç yorumlarını almak için fonksiyon
+def get_horoscope(sign: str, day: str):
+    # Aztro API'ye POST isteği gönderiyoruz
+    response = requests.post(f"{API_URL}/?sign={sign}&day={day}")
+    if response.status_code == 200:
+        horoscope = response.json()
+        return horoscope["description"]
+    else:
+        return "Burç yorumu alınırken bir hata oluştu."
+
+# /burc komutunu işleyen fonksiyon
+def burc(update: Update, context: CallbackContext):
+    if len(context.args) > 0:
+        burc = context.args[0].lower()  # Kullanıcının girdiği burç ismini alıyoruz
+        day = "today"  # Bugün için burç yorumu alıyoruz
+
+        # Burç yorumunu alıyoruz
+        yorum = get_horoscope(burc, day)
+        update.message.reply_text(f"{burc.capitalize()} Burcu Bugün:\n\n{yorum}")
+    else:
+        update.message.reply_text("Lütfen bir burç girin. Örnek: /burc yay")
+
 
 weatherbit_api_key = '4b09195a74624b328d8f71a6e21b16d3'  # Weatherbit API anahtarınızı buraya girin
 
