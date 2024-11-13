@@ -508,7 +508,12 @@ def calculate_zekat(wealth, debts):
 # 7. Soru-Cevap Modülü
 faq = {
     "namaz nasıl kılınır": "Namaz, niyetle başlar ve kıyam, rükû, secde gibi bölümlerle devam eder.",
-    "oruç kimlere farzdır": "Oruç, ergenlik çağına gelmiş, akıl sağlığı yerinde, müslüman kişilere farzdır."
+    "oruç kimlere farzdır": "Oruç, ergenlik çağına gelmiş, akıl sağlığı yerinde, müslüman kişilere farzdır.",
+    "Ameli mezhep imamları": "İmamı Azam Ebu Hanife, İmamı Şafii, İmamı Malik, Ahmed İbni Hanbel",
+    "İtikadi mezhep imamları": "İmamı Maturidi ve İmamı Eş’ari",
+    "Mezhep İmamlarının isimleri": "Numan bin Sabit, Muhammed İdris eş-Şafiî, Ahmed ibn-i Hanbel, Enes bin Malik",
+    "Mezhep ne demektir": "İslam âlimlerinin Kur’an ve sünnet çerçevesinde, birbirleri arasındaki yorum farklılıklarından meydana gelen görüşleridir.",
+    "İcma nedir kaç çeşittir": "Peygamberimizden sonra ortaya çıkan fıkhi bir meselede, âlimlerin görüş birliği yapmalarıdır. Ör: mut’a nikâhının haramlığı icmadır.\n\nA:Sarih İcma(Âlimlerin hepsinin katıldığı) B:Sükutî icma(bir âlim icma yapar diğerleri farklı bir görüş belirtmeksizin susarlar)",
 }
 
 def get_faq(question):
@@ -937,6 +942,65 @@ async def send_video(event):
     video_path = os.path.join(os.path.dirname(__file__), 'videos/cuneyt.mp4')
     # Videoyu komutu gönderen kişiye gönder
     await client.send_file(event.chat_id, video_path, caption="Esteuzubillah @SakirBey")
+
+@client.on(events.NewMessage(pattern='/burc'))
+async def daily_horoscope(event):
+    # Kullanıcının burcunu öğrenin
+    message = event.message.message.split()  # Komut ve burç ismini ayrıştırmak için
+    if len(message) < 2:
+        await event.reply("Lütfen burcunuzu belirtin! Örnek: /burc koç")
+        return
+    sign = message[1].lower()
+
+    # API isteği yapın
+    try:
+        response = requests.get(f'{horoscope_api_url}?sign={sign}')
+        if response.status_code == 200:
+            data = response.json()
+            daily_horoscope = data.get('horoscope', 'Burç yorumu bulunamadı.')
+            await event.reply(f"{sign.capitalize()} burcu için günlük yorum:\n\n{daily_horoscope}")
+        else:
+            await event.reply("Burç yorumu alınamadı. Lütfen daha sonra tekrar deneyin.")
+    except Exception as e:
+        await event.reply("Bir hata oluştu. Lütfen daha sonra tekrar deneyin.")
+
+weatherbit_api_key = '4b09195a74624b328d8f71a6e21b16d3'  # Weatherbit API anahtarınızı buraya girin
+
+# Client'i başlatın
+client = TelegramClient('user_session', api_id, api_hash)
+
+@client.on(events.NewMessage(pattern='/havadurumu'))
+async def get_weather(event):
+    # Kullanıcının şehir ismini öğrenin
+    message = event.message.message.split()  # Komut ve şehir ismini ayrıştırmak için
+    if len(message) < 2:
+        await event.reply("Lütfen bir şehir belirtin! Örnek: /havadurumu İstanbul")
+        return
+    city = message[1].capitalize()
+
+    # Weatherbit API'den hava durumu bilgisini alın
+    weather_url = f'https://api.weatherbit.io/v2.0/current?city={city}&country=TR&key={weatherbit_api_key}&lang=tr'
+    try:
+        response = requests.get(weather_url)
+        if response.status_code == 200:
+            data = response.json()
+            weather_info = data['data'][0]
+            description = weather_info['weather']['description']
+            temp = weather_info['temp']
+            feels_like = weather_info['app_temp']
+            humidity = weather_info['rh']
+
+            # Hava durumu bilgisini kullanıcıya gönder
+            weather_message = (f"{city} için hava durumu:\n"
+                               f"Durum: {description}\n"
+                               f"Sıcaklık: {temp}°C\n"
+                               f"Hissedilen Sıcaklık: {feels_like}°C\n"
+                               f"Nem: {humidity}%")
+            await event.reply(weather_message)
+        else:
+            await event.reply("Hava durumu bilgisi alınamadı. Lütfen şehri kontrol edin veya daha sonra tekrar deneyin.")
+    except Exception as e:
+        await event.reply("Bir hata oluştu. Lütfen daha sonra tekrar deneyin.")
 
 
 @client.on(events.NewMessage(pattern='sakir'))
