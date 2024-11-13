@@ -1090,4 +1090,48 @@ print("Destur esteuzubillah bot çalışıyor mümin kardeşim benim..")
 client.run_until_disconnected()
 
 
-# AIzaSyAqiScab-KM-wWIlY0XYB23l8vy15A6Ai0 eilşt eitrlşy lşrtt 
+import os
+import requests
+from telegram import Update
+from telegram.ext import Updater, CommandHandler, CallbackContext
+
+API_URL = "https://aztro.sameerkumar.website"
+
+# Burç yorumlarını almak için fonksiyon
+def get_horoscope(sign: str, day: str):
+    response = requests.post(f"{API_URL}/?sign={sign}&day={day}")
+    if response.status_code == 200:
+        horoscope = response.json()
+        return horoscope["description"]
+    else:
+        return "Burç yorumu alınırken bir hata oluştu."
+
+# /burc komutunu işleyen fonksiyon
+def burc(update: Update, context: CallbackContext):
+    if len(context.args) > 0:
+        burc = context.args[0].lower()  # Kullanıcının girdiği burç ismini alıyoruz
+        day = "today"  # Bugün için burç yorumu alıyoruz
+
+        # Burç yorumunu alıyoruz
+        yorum = get_horoscope(burc, day)
+        update.message.reply_text(f"{burc.capitalize()} Burcu Bugün:\n\n{yorum}")
+    else:
+        update.message.reply_text("Lütfen bir burç girin. Örnek: /burc yay")
+
+
+# Botu başlatmak
+def main():
+    # Bot tokenınızı buraya girin
+    token = '7763011142:AAFlwQNLG7M01pbcQd2qE9kCb57ho5Ett_A'
+    if not token:
+        raise ValueError("BOT_TOKEN ortam değişkeni ayarlanmamış!")
+
+    updater = Updater(token, use_context=True)
+    dp = updater.dispatcher
+
+    # Komutları ekliyoruz
+    dp.add_handler(CommandHandler("burc", burc))
+
+    # Botu çalıştırmaya başlıyoruz
+    updater.start_polling()
+    updater.idle()
