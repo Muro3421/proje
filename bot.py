@@ -21,6 +21,8 @@ from telethon import Button
 from telethon.sessions import StringSession
 from telethon.tl.types import ChannelParticipantsAdmins
 import requests
+from telegram import Update
+from telegram.ext import Updater, CommandHandler, CallbackContext
 from requests.adapters import HTTPAdapter
 from mezhepler import get_mezhepler_info 
 from ö_söz import get_random_quote
