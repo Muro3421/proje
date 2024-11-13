@@ -1005,34 +1005,46 @@ async def get_weather(event):
     except Exception as e:
         await event.reply("Bir hata oluştu. Lütfen daha sonra tekrar deneyin.")
 
+restricted_groups = [-1002373451092]  
 
 @client.on(events.NewMessage(pattern='sakir'))
 async def send_video(event):
-    # Proje kök dizinine göre video yolunu ayarlayın
+    # Check if the command was sent from a restricted group
+    if event.chat_id in restricted_groups:
+        return  # Do nothing if the message is from a restricted group
+    
+    # Adjust video path relative to project root
     video_path = os.path.join(os.path.dirname(__file__), 'videos/cuneyt.mp4')
-    # Videoyu komutu gönderen kişiye gönder
+    
+    # Send the video to the user who sent the command
     await client.send_file(event.chat_id, video_path, caption="Esteuzubillah @SakirBey")
 
 @client.on(events.NewMessage(pattern='şakir'))
 async def send_video(event):
-    # Proje kök dizinine göre video yolunu ayarlayın
+    # Check if the command was sent from a restricted group
+    if event.chat_id in restricted_groups:
+        return  # Do nothing if the message is from a restricted group
+    
+    # Adjust video path relative to project root
     video_path = os.path.join(os.path.dirname(__file__), 'videos/cuneyt.mp4')
-    # Videoyu komutu gönderen kişiye gönder
-    await client.send_file(event.chat_id, video_path, caption="Esteuzubillah @SakirBey")
 
 @client.on(events.NewMessage(pattern='destur'))
 async def send_video(event):
-    # Proje kök dizinine göre video yolunu ayarlayın
-    video_path = os.path.join(os.path.dirname(__file__), 'videos/destur.mp4')
-    # Videoyu komutu gönderen kişiye gönder
-    await client.send_file(event.chat_id, video_path, caption="**Esteuzubillah Açılın** @SakirBey **Geldii!!**")
+    # Check if the command was sent from a restricted group
+    if event.chat_id in restricted_groups:
+        return  # Do nothing if the message is from a restricted group
+    
+    # Adjust video path relative to project root
+    video_path = os.path.join(os.path.dirname(__file__), 'videos/cuneyt.mp4')
 
 @client.on(events.NewMessage(pattern='@SakirBey'))
 async def send_video(event):
-    # Proje kök dizinine göre video yolunu ayarlayın
+    # Check if the command was sent from a restricted group
+    if event.chat_id in restricted_groups:
+        return  # Do nothing if the message is from a restricted group
+    
+    # Adjust video path relative to project root
     video_path = os.path.join(os.path.dirname(__file__), 'videos/cuneyt.mp4')
-    # Videoyu komutu gönderen kişiye gönder
-    await client.send_file(event.chat_id, video_path, caption="Esteuzubillah @SakirBey")
 
 allowed_group_ids = [-1002416358122, -1002382744304]  # Buraya istediğiniz diğer chat_id'leri ekleyin
 
