@@ -966,9 +966,6 @@ async def daily_horoscope(event):
 
 weatherbit_api_key = '4b09195a74624b328d8f71a6e21b16d3'  # Weatherbit API anahtarınızı buraya girin
 
-# Client'i başlatın
-client = TelegramClient('user_session', api_id, api_hash)
-
 @client.on(events.NewMessage(pattern='/havadurumu'))
 async def get_weather(event):
     # Kullanıcının şehir ismini öğrenin
