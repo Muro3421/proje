@@ -862,15 +862,28 @@ async def get_weather(event):
         await event.reply("Bir hata oluştu. Lütfen daha sonra tekrar deneyin.")
 
 
-@client.on(events.NewMessage(pattern='destur'))
-async def send_video(event):
-    video_path = os.path.join(os.path.dirname(__file__), 'videos/destur.mp4')
+resim_dosyasi = 'videos/cuneyt.jpg'  # Klasördeki dosya yolunu belirtiyoruz
 
-@client.on(events.NewMessage(pattern='@SakirBey'))
-async def send_video(event):
+@client.on(events.NewMessage)
+async def selam_komutu(event):
+    # Gelen mesajın içeriğini küçük harfe çeviriyoruz
+    mesaj = event.message.message.lower()
     
-    # Adjust video path relative to project root
-    video_path = os.path.join(os.path.dirname(__file__), 'videos/cuneyt.mp4')
+    # Mesaj 'selamın aleyküm' içeriyorsa yanıtla ve resim gönder
+    if mesaj == '@SakirBey':
+        await event.reply("Destur Esteuzubillah @SakirBey koş..")
+        await client.send_file(event.chat_id, resim_dosyasi)
+
+@client.on(events.NewMessage)
+async def selam_komutu(event):
+    # Gelen mesajın içeriğini küçük harfe çeviriyoruz
+    mesaj = event.message.message.lower()
+    
+    # Mesaj 'selamın aleyküm' içeriyorsa yanıtla ve resim gönder
+    if mesaj == 'Şakir':
+        await event.reply("Destur Esteuzubillah @SakirBey koş..")
+        await client.send_file(event.chat_id, resim_dosyasi)
+
 
 
 
