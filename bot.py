@@ -1,18 +1,3 @@
-'''''
-from telethon import TelegramClient, events
-from transformers import AutoTokenizer, AutoModelForCausalLM
-
-# Telegram API bilgilerinizi buraya ekleyin
-api_id = '28319460'
-api_hash = '2b96c98ca24a841eaf687db2cb8082c5'
-bot_token = '   '
-
-bot = TelegramClient('bot', api_id, api_hash).start(bot_token=bot_token)
-
-
-# Botu çalıştırın
-bot.run_until_disconnected()
-'''
 from telethon import TelegramClient, events
 import random
 import re
@@ -43,18 +28,6 @@ api_id = '28319460'  # Kendi API ID'nizi buraya yazın
 api_hash = '2b96c98ca24a841eaf687db2cb8082c5'  # Kendi API Hash'inizi buraya yazın
 bot_token = '7763011142:AAFlwQNLG7M01pbcQd2qE9kCb57ho5Ett_A'
 
-# Kullanıcı bilgilerini saklamak için bir sözlük
-user_data = {}
-''''
-# Rastgele yanıtlar
-responses = [
-    "Bunu sevdim!",
-    "İlginç!",
-    "Devam et!",
-    "Bu harika!",
-    "Farklı bir şey dene!"
-]
-'''
 # Telegram istemcisi oluştur
 client = TelegramClient('bot', api_id, api_hash).start(bot_token=bot_token)
 
@@ -480,22 +453,6 @@ dualar = {
 def get_dua(dua_name):
     return dualar.get(dua_name, "Bu dua bulunamadı.")
 
-# 4. Kur'an-ı Kerim Tilaveti (Sesli)
-def get_quran_audio(surah_number):
-    return f"https://verses.quran.com/{surah_number}.mp3"
-
-'''# 5. Tesbih Botu
-tesbih_counter = {}
-
-def reset_tesbih(user_id):
-    tesbih_counter[user_id] = 0
-
-def increment_tesbih(user_id):
-    if user_id not in tesbih_counter:
-        reset_tesbih(user_id)
-    tesbih_counter[user_id] += 1
-    return tesbih_counter[user_id]
-'''
 # 6. Zekat Hesaplama Aracı
 def calculate_zekat(wealth, debts):
     net_wealth = wealth - debts
@@ -544,7 +501,7 @@ async def slm_komutu(event):
     mesaj = event.message.message.lower()
     
     # Mesaj 'selamın aleyküm' içeriyorsa yanıtla
-    if mesaj == 'selamın aleyküm':
+    if mesaj == 'Slm':
         await event.reply("**Aleyküm Selam ve Rahmetullah ve bereketuhu hoş geldin**")
 
 @client.on(events.NewMessage)
@@ -553,7 +510,7 @@ async def selam_komutu(event):
     mesaj = event.message.message.lower()
     
     # Mesaj 'selamın aleyküm' içeriyorsa yanıtla
-    if mesaj == 'selamın aleyküm':
+    if mesaj == 'Selamın aleyküm':
         await event.reply("**Aleyküm Selam ve Rahmetullah ve bereketuhu hoş geldin**")
 
 @client.on(events.NewMessage(pattern=r'/sures'))
