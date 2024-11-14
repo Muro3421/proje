@@ -20,5 +20,6 @@ def get_random_quote():
     "Allah iyi niyetle çabalayan hiç bir kalbe yolunu şaşırtmaz",
     "kalbini yaratan, kalbinde ki dertleri bilmez mi? __Sabret..__",
     "Son çare **Allah** değil tek çare **Allah**..",
+    "Kimseden bir şey bekleme, güzel şeyler daima **Allah'tan** gelir.",
 ]
     return random.choice(quotes)
