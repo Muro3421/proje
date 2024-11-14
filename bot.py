@@ -778,41 +778,46 @@ async def filter_profane_words(event):
                 await event.reply(f"@{event.sender.username or event.sender.first_name}, lütfen küfürlü dil kullanmayın!")
                 break  # Bir kelimeyle eşleştiğinde döngüyü sonlandır
 
-def ezan_vakitleri_getir(ilce_kodu):
+API_URL = "https://api.aladhan.com/v1/timingsByCity"
+
+@client.on(events.NewMessage(pattern=r"/ezanvakti (.+)"))
+async def ezan_vakti(event):
+    # Kullanıcıdan şehir adını al
+    input_text = event.pattern_match.group(1)
+    city = input_text.strip()
+
+    # API isteği için URL'yi hazırla
+    params = {
+        "city": city,
+        "country": "Turkey",
+        "method": 13  # Türkiye için uygun metod
+    }
+
     try:
-        url = f"https://ezanvakti.herokuapp.com/vakitler?ilce={ilce_kodu}"
-        response = requests.get(url)
-        response.raise_for_status()  # Hata varsa burada fırlatılır
+        # API'ye istek gönder
+        response = requests.get(API_URL, params=params)
+        response.raise_for_status()
         data = response.json()
         
-        if data:
-            vakitler = {
-                "İmsak": data[0]["Imsak"],
-                "Güneş": data[0]["Gunes"],
-                "Öğle": data[0]["Ogle"],
-                "İkindi": data[0]["Ikindi"],
-                "Akşam": data[0]["Aksam"],
-                "Yatsı": data[0]["Yatsi"]
-            }
-            return vakitler
-        else:
-            return None
-    except Exception as e:
-        print(f"Hata oluştu: {e}")
-        return None
+        # API yanıtından ezan vakitlerini al
+        timings = data['data']['timings']
+        
+        # Ezan vakitlerini formatla
+        ezan_vakitleri = (
+            f"**📌 {city.capitalize()} Ezan Vakitleri**\n\n"
+            f"🌅 İmsak: {timings['Fajr']}\n"
+            f"🌇 Güneş: {timings['Sunrise']}\n"
+            f"🕌 Öğle: {timings['Dhuhr']}\n"
+            f"🌆 İkindi: {timings['Asr']}\n"
+            f"🌄 Akşam: {timings['Maghrib']}\n"
+            f"🌌 Yatsı: {timings['Isha']}\n"
+        )
+        
+        # Cevabı kullanıcıya gönder
+        await event.reply(ezan_vakitleri)
+    except requests.exceptions.RequestException as e:
+        await event.reply("Ezan vakitleri alınamadı, lütfen daha sonra tekrar deneyin.")
 
-# `/vakitler` komutuyla ezan vakitlerini gönderen olay
-@client.on(events.NewMessage(pattern="/vakitler"))
-async def ezan_vakitleri_yaniti(event):
-    ilce_kodu = "2"  # İstediğiniz ilçe kodunu buraya yazabilirsiniz
-    vakitler = ezan_vakitleri_getir(ilce_kodu)
-    
-    if vakitler:
-        mesaj = "**Güncel Ezan Vakitleri**\n\n" + "\n".join([f"{vakit}: {zaman}" for vakit, zaman in vakitler.items()])
-    else:
-        mesaj = "Ezan vakitleri alınamadı. Lütfen daha sonra tekrar deneyin."
-    
-    await event.reply(mesaj)
 @client.on(events.NewMessage(pattern=r'/komut'))
 async def komut(event):
     await event.respond("**Selamın Aleyküm**\n⚙️__Komut Listesi__\n\n/hediye \n**Örnek:** ```/hediye @SakirBey```\n\n/tespih __Sanal Tespih Çekersiniz..__\n\n/zekat __Zekat Hesaplayıcı..__\n**Örnek:** ```/zekat 1400 200```\n\n/soru __Botumuza Eklediğim Soruları Bu Komut İle Sorabilirsiniz__\n**Örnek:** ```/soru namaz nasıl kılınır``` Soru Eklentileri Şunlardır->```namaz nasıl kılınır```,```oruç kimlere farzdır```\n\n/mezhep __Girdiğiniz Mezhep Hakkında Bilgi Getirir__\n**Örnek:** ```/mezhep hanefi``` Mezhepler Şunlardır -> ```hanefi``` , ```şafii``` , ```maliki``` , ```hanbeli``` , ```şii```\n\n/tarih __Güncel Miladi ve Hicri Takvimini Gösterir__\n\n/ösöz __Random Özlü Söz Getirir..__\n\n/hadis __Random Sahih Hadis Getirir..__\n\n/ayet __Random Ayet Getirir..__\n\n/sunnet __Random Peygamberimizin s.a.v Sünnetlerini Getirir..__\n\n/99 __Random Esmaül Hüsna Getirir..__\n\n/dua __Bu Komut İle Eklediğimiz Duaları Getirir..__\n**Örnek:** ```/dua sabah duası``` Eklenmiş olan dualar -> ```sabah duası``` , ```yolculuk duası``` , ```yatarken okunacak dua```\n\n/ilmihal __Eklediğimiz İlmihal Bilgilerini Getirir..__\n**Örnek:** ```/ilmihal oruç``` Kullanılan Cümleler -> ```oruç``` , ```zekat``` , ```imanın esasları``` , ```ibadetler``` , ```temizlik``` , ```ahlak``` , ```helal ve haram``` , ```nikah ve evlilik``` , ```ahiret inancı``` , ```muamelat```\n\n/sures\n\n/ezanvakti \n**Örnek:** ```/ezanvakti adana```\n\n")
