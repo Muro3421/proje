@@ -1001,7 +1001,7 @@ async def send_video(event):
         return  # Do nothing if the message is from a restricted group
     
     # Adjust video path relative to project root
-    video_path = os.path.join(os.path.dirname(__file__), 'videos/cuneyt.mp4')
+    video_path = os.path.join(os.path.dirname(__file__), 'videos/destur.mp4')
 
 @client.on(events.NewMessage(pattern='@SakirBey'))
 async def send_video(event):
