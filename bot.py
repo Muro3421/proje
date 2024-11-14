@@ -87,8 +87,6 @@ async def my_event_handler(event):
         await event.respond('Rabbim Allahu Tealadır (c.c)')
     if message_text.startswith('Seni kim yarattı'):
         await event.respond('Beni Alemlerin Rabbi Olan Allah yarattı.')
-    if message_text.startswith('Selam'):
-        await event.respond('Aleyküm Selam ve Rahmetullah ve bereketuhu hoş geldin')
     if message_text.startswith('esmaül hüsna'):
         await event.respond('Esmaül Hüsna İçin /99 komutunu kullanınız..')
     if message_text.startswith('/developer'):
