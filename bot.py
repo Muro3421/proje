@@ -784,45 +784,42 @@ async def sure_handler(event):
     audio_url = get_quran_audio(surah_number)
     await event.respond(f"Kur'an-ı Kerim Tilaveti (Sure {surah_number}): {audio_url}")
 '''
-API_URL = "https://api.aladhan.com/v1/timingsByCity"
-
 @client.on(events.NewMessage(pattern=r"/ezanvakti (.+)"))
 async def ezan_vakti(event):
-    # Kullanıcıdan şehir adını al
+    # Kullanıcıdan şehir ve ilçe adını al
     input_text = event.pattern_match.group(1)
-    city = input_text.strip()
-
-    # API isteği için URL'yi hazırla
-    params = {
-        "city": city,
-        "country": "Turkey",
-        "method": 13  # Türkiye için uygun metod
-    }
+    city, district = [x.strip() for x in input_text.split(",")]
 
     try:
-        # API'ye asenkron istek gönder
+        # Şehir ID'sini al
         async with httpx.AsyncClient() as client:
-            response = await client.get(API_URL, params=params)
-            response.raise_for_status()
-            data = response.json()
+            city_response = await client.get("https://ezanvakti.diyanet.gov.tr/sehirler")
+            cities = city_response.json()
+            city_id = next((c['SehirID'] for c in cities if c['SehirAdi'].lower() == city.lower()), None)
         
-        # API yanıtından ezan vakitlerini al
-        timings = data['data']['timings']
+        # İlçe ID'sini al
+        district_response = await client.get(f"https://ezanvakti.diyanet.gov.tr/ilceler/{city_id}")
+        districts = district_response.json()
+        district_id = next((d['IlceID'] for d in districts if d['IlceAdi'].lower() == district.lower()), None)
         
+        # Ezan vakitlerini al
+        vakit_response = await client.get(f"https://ezanvakti.diyanet.gov.tr/vakitler/{district_id}")
+        vakitler = vakit_response.json()[0]
+
         # Ezan vakitlerini formatla
         ezan_vakitleri = (
-            f"**📌 {city.capitalize()} Ezan Vakitleri**\n\n"
-            f"🌅 İmsak: {timings['Fajr']}\n"
-            f"🌇 Güneş: {timings['Sunrise']}\n"
-            f"🕌 Öğle: {timings['Dhuhr']}\n"
-            f"🌆 İkindi: {timings['Asr']}\n"
-            f"🌄 Akşam: {timings['Maghrib']}\n"
-            f"🌌 Yatsı: {timings['Isha']}\n"
+            f"**📌 {city.capitalize()} - {district.capitalize()} Ezan Vakitleri**\n\n"
+            f"🌅 İmsak: {vakitler['Imsak']}\n"
+            f"🌇 Güneş: {vakitler['Gunes']}\n"
+            f"🕌 Öğle: {vakitler['Ogle']}\n"
+            f"🌆 İkindi: {vakitler['Ikindi']}\n"
+            f"🌄 Akşam: {vakitler['Aksam']}\n"
+            f"🌌 Yatsı: {vakitler['Yatsi']}\n"
         )
-        
+
         # Cevabı kullanıcıya gönder
         await event.reply(ezan_vakitleri)
-    except httpx.RequestError:
+    except Exception as e:
         await event.reply("Ezan vakitleri alınamadı, lütfen daha sonra tekrar deneyin.")
 
 
