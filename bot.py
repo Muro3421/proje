@@ -26,6 +26,7 @@ from telegram.ext import Updater, CommandHandler, CallbackContext
 from requests.adapters import HTTPAdapter
 from mezhepler import get_mezhepler_info 
 from ö_söz import get_random_quote
+import httpx
 import http.client
 from telethon.tl.functions.messages import GetDialogsRequest
 from telethon.tl.types import InputPeerChat
