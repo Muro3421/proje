@@ -513,6 +513,15 @@ async def selam_komutu(event):
     if mesaj == 'selamın aleyküm':
         await event.reply("**Aleyküm Selam ve Rahmetullah ve bereketuhu hoş geldin**")
 
+@client.on(events.NewMessage)
+async def selam_komutu(event):
+    # Gelen mesajın içeriğini küçük harfe çeviriyoruz
+    mesaj = event.message.message.lower()
+    
+    # Mesaj 'selamın aleyküm' içeriyorsa yanıtla
+    if mesaj == 'selam':
+        await event.reply("**Aleyküm Selam ve Rahmetullah ve bereketuhu hoş geldin**")
+
 @client.on(events.NewMessage(pattern=r'/sures'))
 async def list_all_suras(event):
     all_suras = "**Kur'an Sureleri:**\n\n"
