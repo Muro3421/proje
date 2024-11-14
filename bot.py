@@ -87,10 +87,6 @@ async def my_event_handler(event):
         await event.respond('Rabbim Allahu Tealadır (c.c)')
     if message_text.startswith('Seni kim yarattı'):
         await event.respond('Beni Alemlerin Rabbi Olan Allah yarattı.')
-    if message_text.startswith('selamın aleyküm'):
-        await event.respond('Aleyküm Selam ve Rahmetullah ve bereketuhu hoş geldin')
-    if message_text.startswith('Selamın aleyküm'):
-        await event.respond('Aleyküm Selam ve Rahmetullah ve bereketuhu hoş geldin')
     if message_text.startswith('Selam'):
         await event.respond('Aleyküm Selam ve Rahmetullah ve bereketuhu hoş geldin')
     if message_text.startswith('esmaül hüsna'):
@@ -543,6 +539,15 @@ def get_ilmihal(info):
 @client.on(events.NewMessage(pattern='/hadis'))
 async def hadis_handler(event):
     await event.respond(get_random_hadis())
+
+@client.on(events.NewMessage)
+async def selam_komutu(event):
+    # Gelen mesajın içeriğini küçük harfe çeviriyoruz
+    mesaj = event.message.message.lower()
+    
+    # Mesaj 'selamın aleyküm' içeriyorsa yanıtla
+    if mesaj == 'selamın aleyküm':
+        await event.reply("**Aleyküm Selam ve Rahmetullah ve bereketuhu hoş geldin**")
 
 @client.on(events.NewMessage(pattern=r'/sures'))
 async def list_all_suras(event):
