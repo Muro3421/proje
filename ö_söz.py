@@ -21,5 +21,6 @@ def get_random_quote():
     "kalbini yaratan, kalbinde ki dertleri bilmez mi? __Sabret..__",
     "Son çare **Allah** değil tek çare **Allah**..",
     "Kimseden bir şey bekleme, güzel şeyler daima **Allah'tan** gelir.",
+    "Canı Yanan Sabretsin Can Yakan Canının Yanacağı Günü Beklesin..",
 ]
     return random.choice(quotes)
