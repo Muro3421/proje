@@ -3,3 +3,4 @@ requests
 python-dotenv
 hijri_converter
 python-telegram-bot
+httpx
