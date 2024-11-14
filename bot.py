@@ -778,37 +778,41 @@ async def filter_profane_words(event):
                 await event.reply(f"@{event.sender.username or event.sender.first_name}, lütfen küfürlü dil kullanmayın!")
                 break  # Bir kelimeyle eşleştiğinde döngüyü sonlandır
 
-def get_prayer_times(city_code):
-    # Replace `city_code` with the corresponding city code
-    url = f"https://ezanvakti.herokuapp.com/vakitler?ilce={city_code}"
-    response = requests.get(url)
-    if response.status_code == 200:
+def ezan_vakitleri_getir(ilce_kodu):
+    try:
+        url = f"https://ezanvakti.herokuapp.com/vakitler?ilce={ilce_kodu}"
+        response = requests.get(url)
+        response.raise_for_status()  # Hata varsa burada fırlatılır
         data = response.json()
-        today = data[0]
-        times = {
-            "İmsak": today["Imsak"],
-            "Güneş": today["Gunes"],
-            "Öğle": today["Ogle"],
-            "İkindi": today["Ikindi"],
-            "Akşam": today["Aksam"],
-            "Yatsı": today["Yatsi"]
-        }
-        return times
-    else:
+        
+        if data:
+            vakitler = {
+                "İmsak": data[0]["Imsak"],
+                "Güneş": data[0]["Gunes"],
+                "Öğle": data[0]["Ogle"],
+                "İkindi": data[0]["Ikindi"],
+                "Akşam": data[0]["Aksam"],
+                "Yatsı": data[0]["Yatsi"]
+            }
+            return vakitler
+        else:
+            return None
+    except Exception as e:
+        print(f"Hata oluştu: {e}")
         return None
 
-# Command to get prayer times
+# `/vakitler` komutuyla ezan vakitlerini gönderen olay
 @client.on(events.NewMessage(pattern="/vakitler"))
-async def send_prayer_times(event):
-    city_code = "2"  # Replace with desired city code or take as input
-    times = get_prayer_times(city_code)
-    if times:
-        message = "**Güncel Ezan Vakitleri**\n\n" + "\n".join([f"{k}: {v}" for k, v in times.items()])
-    else:
-        message = "Ezan vakitlerini alırken bir hata oluştu."
+async def ezan_vakitleri_yaniti(event):
+    ilce_kodu = "2"  # İstediğiniz ilçe kodunu buraya yazabilirsiniz
+    vakitler = ezan_vakitleri_getir(ilce_kodu)
     
-    await event.reply(message)
-
+    if vakitler:
+        mesaj = "**Güncel Ezan Vakitleri**\n\n" + "\n".join([f"{vakit}: {zaman}" for vakit, zaman in vakitler.items()])
+    else:
+        mesaj = "Ezan vakitleri alınamadı. Lütfen daha sonra tekrar deneyin."
+    
+    await event.reply(mesaj)
 @client.on(events.NewMessage(pattern=r'/komut'))
 async def komut(event):
     await event.respond("**Selamın Aleyküm**\n⚙️__Komut Listesi__\n\n/hediye \n**Örnek:** ```/hediye @SakirBey```\n\n/tespih __Sanal Tespih Çekersiniz..__\n\n/zekat __Zekat Hesaplayıcı..__\n**Örnek:** ```/zekat 1400 200```\n\n/soru __Botumuza Eklediğim Soruları Bu Komut İle Sorabilirsiniz__\n**Örnek:** ```/soru namaz nasıl kılınır``` Soru Eklentileri Şunlardır->```namaz nasıl kılınır```,```oruç kimlere farzdır```\n\n/mezhep __Girdiğiniz Mezhep Hakkında Bilgi Getirir__\n**Örnek:** ```/mezhep hanefi``` Mezhepler Şunlardır -> ```hanefi``` , ```şafii``` , ```maliki``` , ```hanbeli``` , ```şii```\n\n/tarih __Güncel Miladi ve Hicri Takvimini Gösterir__\n\n/ösöz __Random Özlü Söz Getirir..__\n\n/hadis __Random Sahih Hadis Getirir..__\n\n/ayet __Random Ayet Getirir..__\n\n/sunnet __Random Peygamberimizin s.a.v Sünnetlerini Getirir..__\n\n/99 __Random Esmaül Hüsna Getirir..__\n\n/dua __Bu Komut İle Eklediğimiz Duaları Getirir..__\n**Örnek:** ```/dua sabah duası``` Eklenmiş olan dualar -> ```sabah duası``` , ```yolculuk duası``` , ```yatarken okunacak dua```\n\n/ilmihal __Eklediğimiz İlmihal Bilgilerini Getirir..__\n**Örnek:** ```/ilmihal oruç``` Kullanılan Cümleler -> ```oruç``` , ```zekat``` , ```imanın esasları``` , ```ibadetler``` , ```temizlik``` , ```ahlak``` , ```helal ve haram``` , ```nikah ve evlilik``` , ```ahiret inancı``` , ```muamelat```\n\n/sures\n\n/ezanvakti \n**Örnek:** ```/ezanvakti adana```\n\n")
