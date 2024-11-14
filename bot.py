@@ -800,10 +800,11 @@ async def ezan_vakti(event):
     }
 
     try:
-        # API'ye istek gönder
-        response = requests.get(API_URL, params=params)
-        response.raise_for_status()
-        data = response.json()
+        # API'ye asenkron istek gönder
+        async with httpx.AsyncClient() as client:
+            response = await client.get(API_URL, params=params)
+            response.raise_for_status()
+            data = response.json()
         
         # API yanıtından ezan vakitlerini al
         timings = data['data']['timings']
@@ -821,7 +822,7 @@ async def ezan_vakti(event):
         
         # Cevabı kullanıcıya gönder
         await event.reply(ezan_vakitleri)
-    except requests.exceptions.RequestException as e:
+    except httpx.RequestError:
         await event.reply("Ezan vakitleri alınamadı, lütfen daha sonra tekrar deneyin.")
 
 
