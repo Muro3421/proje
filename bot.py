@@ -501,7 +501,7 @@ async def slm_komutu(event):
     mesaj = event.message.message.lower()
     
     # Mesaj 'selamın aleyküm' içeriyorsa yanıtla
-    if mesaj == 'Slm':
+    if mesaj == 'slm':
         await event.reply("**Aleyküm Selam ve Rahmetullah ve bereketuhu hoş geldin**")
 
 @client.on(events.NewMessage)
@@ -510,7 +510,7 @@ async def selam_komutu(event):
     mesaj = event.message.message.lower()
     
     # Mesaj 'selamın aleyküm' içeriyorsa yanıtla
-    if mesaj == 'Selamın aleyküm':
+    if mesaj == 'selamın aleyküm':
         await event.reply("**Aleyküm Selam ve Rahmetullah ve bereketuhu hoş geldin**")
 
 @client.on(events.NewMessage(pattern=r'/sures'))
@@ -688,34 +688,6 @@ async def welcome_user(event):
         
         # Mesajı Markdown formatında gönderin
         await event.reply(welcome_message, parse_mode='md')
-
-
-
-'''
-@client.on(events.NewMessage(pattern="^/"))
-async def start(event):
-    # Sadece komutu çalıştıran kullanıcı bilgisi
-    usr = await event.get_sender()
-    ad = f"[{usr.first_name}](tg://user?id={usr.id})"
-    
-    # Günlük grubuna sadece bir kere mesaj gönderme
-    await client.send_message(log_grub, f"ℹ️ {ad} Kişisi Botu Başlattı.")
-    
-    # Kullanıcıya yanıt gönderme
-    await event.reply(
-        "**🌀 GrupTaggerBot**\n"
-        "**Grubunuzdaki neredeyse tüm üyelere etiket atabilirim.**\n\n"
-        "Komutlar için `/help` yazın.",
-        buttons=[
-            [Button.url('Beni Gruba Ekle ➕', f"https://t.me/sakirviphapy_bot?startgroup=a")],
-            [Button.url('Support🛠', "https://t.me/SakirBey2")],
-            [Button.url('Sahibim', "https://t.me/SakirBey")],
-            [Button.url('Developer👨🏻‍💻', "https://t.me/SakirBey")],
-            [Button.url('Github Code', "https://nolur.com")],
-        ],
-        link_preview=False
-    )
-'''
 
 @client.on(events.NewMessage(pattern='/dua (?P<dua_name>[\w\s]+)'))
 async def dua_handler(event):
@@ -908,6 +880,8 @@ async def send_video(event):
     # Adjust video path relative to project root
     video_path = os.path.join(os.path.dirname(__file__), 'videos/cuneyt.mp4')
 
+
+
 allowed_group_ids = [-1002416358122, -1002382744304]  # Buraya istediğiniz diğer chat_id'leri ekleyin
 
 @client.on(events.NewMessage(pattern='Lena'))
@@ -927,14 +901,6 @@ async def send_video(event):
         video_path = os.path.join(os.path.dirname(__file__), 'videos/lena.mp4')
         # Videoyu komutu gönderen kişiye gönder
         await client.send_file(event.chat_id, video_path, caption="**Ben Lenaa**")
-
-@client.on(events.NewMessage(pattern=r'(?i)^sa$'))
-async def sa(event):
-    await event.respond("Aleyküm Selam ve Rahmetullah ve bereketuhu hoş geldin")
-
-@client.on(events.NewMessage(pattern=r'(?i)^Selamün aleyküm$'))
-async def sa(event):
-    await event.respond("Aleyküm Selam ve Rahmetullah ve bereketuhu hoş geldin")
 
 sudo_users = [5710250764, 7235469974, 1503631196, 7489011154]  # Replace these with your actual sudo user IDs
 
