@@ -864,18 +864,10 @@ async def get_weather(event):
 
 @client.on(events.NewMessage(pattern='destur'))
 async def send_video(event):
-    # Check if the command was sent from a restricted group
-    if event.chat_id in restricted_groups:
-        return  # Do nothing if the message is from a restricted group
-    
-    # Adjust video path relative to project root
     video_path = os.path.join(os.path.dirname(__file__), 'videos/destur.mp4')
 
 @client.on(events.NewMessage(pattern='@SakirBey'))
 async def send_video(event):
-    # Check if the command was sent from a restricted group
-    if event.chat_id in restricted_groups:
-        return  # Do nothing if the message is from a restricted group
     
     # Adjust video path relative to project root
     video_path = os.path.join(os.path.dirname(__file__), 'videos/cuneyt.mp4')
