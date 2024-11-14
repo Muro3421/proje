@@ -777,48 +777,37 @@ async def filter_profane_words(event):
                 # Kullanıcıyı etiketleyerek uyarı gönder
                 await event.reply(f"@{event.sender.username or event.sender.first_name}, lütfen küfürlü dil kullanmayın!")
                 break  # Bir kelimeyle eşleştiğinde döngüyü sonlandır
-'''
-@client.on(events.NewMessage(pattern='/sure (?P<surah_number>\d+)'))
-async def sure_handler(event):
-    surah_number = event.pattern_match.group('surah_number')
-    audio_url = get_quran_audio(surah_number)
-    await event.respond(f"Kur'an-ı Kerim Tilaveti (Sure {surah_number}): {audio_url}")
-'''
 
-API_URL = "https://namazvakti.herokuapp.com/api/timesFromCity"
+def get_prayer_times(city_code):
+    # Replace `city_code` with the corresponding city code
+    url = f"https://ezanvakti.herokuapp.com/vakitler?ilce={city_code}"
+    response = requests.get(url)
+    if response.status_code == 200:
+        data = response.json()
+        today = data[0]
+        times = {
+            "İmsak": today["Imsak"],
+            "Güneş": today["Gunes"],
+            "Öğle": today["Ogle"],
+            "İkindi": today["Ikindi"],
+            "Akşam": today["Aksam"],
+            "Yatsı": today["Yatsi"]
+        }
+        return times
+    else:
+        return None
 
-@client.on(events.NewMessage(pattern=r"/ezanvakti (.+)"))
-async def ezan_vakti(event):
-    # Kullanıcıdan şehir adını al
-    input_text = event.pattern_match.group(1)
-    city = input_text.strip().capitalize()  # Şehri büyük harfle başlat
-
-    try:
-        # API isteğini gönder
-        async with httpx.AsyncClient() as client:
-            response = await client.get(API_URL, params={"city": city, "country": "Turkey"})
-            response.raise_for_status()
-            data = response.json()
-        
-        # API yanıtından ezan vakitlerini al
-        timings = data['result']
-        
-        # Ezan vakitlerini formatla
-        ezan_vakitleri = (
-            f"**📌 {city} Ezan Vakitleri**\n\n"
-            f"🌅 İmsak: {timings['Imsak']}\n"
-            f"🌇 Güneş: {timings['Gunes']}\n"
-            f"🕌 Öğle: {timings['Ogle']}\n"
-            f"🌆 İkindi: {timings['Ikindi']}\n"
-            f"🌄 Akşam: {timings['Aksam']}\n"
-            f"🌌 Yatsı: {timings['Yatsi']}\n"
-        )
-        
-        # Cevabı kullanıcıya gönder
-        await event.reply(ezan_vakitleri)
-    except Exception as e:
-        await event.reply("Ezan vakitleri alınamadı, lütfen daha sonra tekrar deneyin.")
-
+# Command to get prayer times
+@client.on(events.NewMessage(pattern="/vakitler"))
+async def send_prayer_times(event):
+    city_code = "2"  # Replace with desired city code or take as input
+    times = get_prayer_times(city_code)
+    if times:
+        message = "**Güncel Ezan Vakitleri**\n\n" + "\n".join([f"{k}: {v}" for k, v in times.items()])
+    else:
+        message = "Ezan vakitlerini alırken bir hata oluştu."
+    
+    await event.reply(message)
 
 @client.on(events.NewMessage(pattern=r'/komut'))
 async def komut(event):
@@ -847,9 +836,6 @@ async def hediye_ver(event):
     # Mesajı gönder
     await event.respond(mesaj)
 
-
-
-
 @client.on(events.NewMessage(pattern="/id"))
 async def _id(event):
     msg = await event.get_reply_message() or event.message
@@ -873,21 +859,6 @@ async def pingy(event):
         f"█▀█ █▀█ █▄░█ █▀▀ █ \n█▀▀ █▄█ █░▀█ █▄█ ▄\n**Ping: {round(ms)} ms**"
     )
 
-
-'''
-@client.on(events.NewMessage(pattern='/tesbih'))
-async def tesbih_handler(event):
-    user_id = event.sender_id
-    usr = await event.get_sender()
-    usr = await event.get_sender()  # Mesajı gönderen kullanıcıyı alır
-    
-    # Mesajı formatla
-    ad = f"[{usr.first_name}](tg://user?id={usr.id}) "
-    count = increment_tesbih(user_id)
-
-    await event.respond(f"{ad}Tesbih Sayısı: {count}")
-'''
-
 @client.on(events.NewMessage(pattern='/zekat (?P<wealth>\d+) (?P<debts>\d+)'))
 async def zekat_handler(event):
     wealth = int(event.pattern_match.group('wealth'))
@@ -904,55 +875,6 @@ async def soru_handler(event):
 async def ilmihal_handler(event):
     info = event.pattern_match.group('info')
     await event.respond(get_ilmihal(info))
-
-
-'''
-@client.on(events.NewMessage(pattern='/help'))
-async def sa(event):
-    # Sadece komutu çalıştıran kullanıcı için ad bilgisi
-    usr = await event.get_sender()
-    ad = f"[{usr.first_name}](tg://user?id={usr.id})"
-    
-    # Günlük grubuna sadece bir kere mesaj gönderme
-    await client.send_message(log_grub, f"ℹ️ {ad} Kişisi Botu Başlattı.")
-    
-    # Kullanıcıya yanıt gönderme
-    await event.respond(
-        "**🌀 İslamicBot Komutları**\n\n"
-        "**/hadis** komutu ile hadis getirir.\n\n"
-        "**/ayet** komutu ile ayet getirir.\n\n"
-        "**/dua** komutu ile istediğin dua getirir. Şu anlık olan dua komutları şunlardır:\n"
-        "/dua sabah duası - /dua yolculuk duası - /dua yatarken okunan dua\n\n"
-        "**/sure bakara** komutu ile süreyi gönderir.\n\n"
-        "**/tespih** komutu ile tespih yapar."
-    )
-'''
-
-
-API_URL = "https://aztro.sameerkumar.website"
-
-# Burç yorumlarını almak için fonksiyon
-def get_horoscope(sign: str, day: str):
-    # Aztro API'ye POST isteği gönderiyoruz
-    response = requests.post(f"{API_URL}/?sign={sign}&day={day}")
-    if response.status_code == 200:
-        horoscope = response.json()
-        return horoscope["description"]
-    else:
-        return "Burç yorumu alınırken bir hata oluştu."
-
-# /burc komutunu işleyen fonksiyon
-def burc(update: Update, context: CallbackContext):
-    if len(context.args) > 0:
-        burc = context.args[0].lower()  # Kullanıcının girdiği burç ismini alıyoruz
-        day = "today"  # Bugün için burç yorumu alıyoruz
-
-        # Burç yorumunu alıyoruz
-        yorum = get_horoscope(burc, day)
-        update.message.reply_text(f"{burc.capitalize()} Burcu Bugün:\n\n{yorum}")
-    else:
-        update.message.reply_text("Lütfen bir burç girin. Örnek: /burc yay")
-
 
 weatherbit_api_key = '4b09195a74624b328d8f71a6e21b16d3'  # Weatherbit API anahtarınızı buraya girin
 
