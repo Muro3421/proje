@@ -4,3 +4,8 @@ python-dotenv
 hijri_converter
 python-telegram-bot
 httpx
+random
+loggin
+asyncio
+telethon.sessions
+telethon.tl.types
