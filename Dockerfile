@@ -6,4 +6,4 @@ COPY . .
 
 RUN pip install -r requirements.txt
 
-CMD ["sh", "-c", "python bot.py & python tagger.py"]
+CMD ["sh", "-c", "python bot.py & python3 tagger.py"]
