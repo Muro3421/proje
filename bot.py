@@ -558,22 +558,23 @@ rxyzdev_initT = {}
 
 OWNER_ID = 5710250764
 BOT_ID = 7763011142
-@client.on(events.ChatAction)
+@client.on(events.NewMessage)
 async def hg(event):
-    # Öncelikle `action_message` ve `action` nesnesinin varlığını kontrol ediyoruz
-    if event.action_message and hasattr(event.action_message.action, 'users'):
-        # from_id'yi kullanıcı nesnesine dönüştürüyoruz
-        from_user = await event.client.get_entity(event.action_message.from_id)
-
-        for new_user in event.action_message.action.users:
+    if event.action and event.action.action == "chat_add_user":
+        for new_user in event.action.users:
+            # Bot'un ID'si ile karşılaştırma yap
             if str(new_user) == str(BOT_ID):
+                from_user = await event.client.get_entity(event.sender_id)
                 await event.reply(
                     f"Hey Selamın Aleyküm {from_user.first_name}, beni {event.chat.title} grubuna eklediğin için teşekkürler⚡️\n\nİslami Bilgilerimi Sizinle Paylaşmak İçin Hizmetinizdeyim İnşeAllah. Komutlar için /help yazmanız yeterlidir✨"
                 )
 
+            # Sahip ID'si ile karşılaştırma yap
             elif str(new_user) == str(OWNER_ID):
                 await event.reply("İşte bu gelen benim sahibim.")
-            elif str(new_user) == "5710250764":
+
+            # Geliştirici ID'si ile karşılaştırma yap
+            elif str(new_user) == "1948748468":
                 await event.reply("İşte bu gelen benim geliştiricim.")
 
 
