@@ -726,7 +726,7 @@ async def dua_handler(event):
 
 
 # Küfürlü kelimelerin listesi
-profane_words = ['amk', 'aq', 'sg', 'oruspu', 'şerefsiz', 'yarrak', 'pezeveng', 'siktir', 'sikeyim', 'sikim', 'ammını', 'taşak', 'am', 'yarram', 'fahişe', 'siktirin', '',]  # Burada küfürlü kelimeleri girin
+profane_words = ['amk', 'aq', 'sg', 'oruspu', 'şerefsiz', 'yarrak', 'pezeveng', 'siktir', 'sikeyim', 'sikim', 'ammını', 'taşak', 'am', 'yarram', 'fahişe', 'siktirin',]  # Burada küfürlü kelimeleri girin
 
 @client.on(events.NewMessage())
 async def filter_profane_words(event):
